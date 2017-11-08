@@ -41,9 +41,9 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   # Make a data table for plotting using data.table transformations
   # You will need to filter, summarise and group by
   # Expect cols: "date", "postcode", "total_offence_count"
-  plot_data <- crime_data[, sum(offence_count),
-                             by = list(month(date),
-                                       postcode)]
+  plot_data <- setDT(crime_data[, sum(offence_count),
+                             by = list(month(crime_data$date),
+                                       crime_data$postcode)])
 
   # These lines will transform the plot_data structure to allow us to plot
   # correlations. Try them out
@@ -56,7 +56,7 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   plot_data_y <- rbind(plot_data$month, plot_data$y, postcodes[2])
   plot_data_xy <- data.frame(t(cbind(plot_data_x,plot_data_y)))
   setnames(plot_data_xy, c("Month", "Total_Offences", "Postcode"))
-  plot_data_xy$X1 <- factor(plot_data_xy$Month, level = c("1","2","3","4","5","6","7","8","9","10","11","12"))
+  plot_data_xy$Month <- factor(plot_data_xy$Month, level = c("7","8","9","10","11","12","1","2","3","4","5","6"))
 
   # Generate the plot
   ggplot(plot_data_xy, aes(x = Month, y = Total_Offences, color = Postcode)) + geom_point(size = 4)
