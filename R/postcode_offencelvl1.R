@@ -50,7 +50,7 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   plot_data[, postcode := plyr::mapvalues(postcode, postcodes, c("x", "y"))]
 
   plot_data <- dcast(plot_data, month ~ postcode, fun = sum,
-                     fill = 0, value.var = "V1")
+                     fill = 0, value.var = "total_offence_count")
 
   plot_data_x <- rbind(plot_data$month, plot_data$x, postcodes[1])
   plot_data_y <- rbind(plot_data$month, plot_data$y, postcodes[2])
