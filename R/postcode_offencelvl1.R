@@ -41,7 +41,7 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   # Make a data table for plotting using data.table transformations
   # You will need to filter, summarise and group by
   # Expect cols: "date", "postcode", "total_offence_count"
-  plot_data <- crime_data[, total_offence_count = sum(offence_count),
+  plot_data <- crime_data[, sum(offence_count),
                              by = list(month(date),
                                        postcode)]
 
@@ -50,7 +50,7 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   plot_data[, postcode := plyr::mapvalues(postcode, postcodes, c("x", "y"))]
 
   plot_data <- dcast(plot_data, month ~ postcode, fun = sum,
-                     fill = 0, value.var = "total_offence_count")
+                     fill = 0, value.var = "V1")
 
   plot_data_x <- rbind(plot_data$month, plot_data$x, postcodes[1])
   plot_data_y <- rbind(plot_data$month, plot_data$y, postcodes[2])
