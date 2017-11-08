@@ -41,9 +41,9 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   # Make a data table for plotting using data.table transformations
   # You will need to filter, summarise and group by
   # Expect cols: "date", "postcode", "total_offence_count"
-  plot_data <- setDT(crime_data[, sum(offence_count),
-                             by = list(month(crime_data$date),
-                                       crime_data$postcode)])
+  plot_data <- crime_data[postcode != "0", list(sum(offence_count)),
+                             by = list(month(date),
+                                       postcode)]
 
   # These lines will transform the plot_data structure to allow us to plot
   # correlations. Try them out
