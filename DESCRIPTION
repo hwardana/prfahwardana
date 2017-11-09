@@ -6,7 +6,6 @@ Author: Harry Wardana
 Maintainer: Harry Wardana <harrywardana@gmail.com>
 Description: Providing a function that returns a graph of monthly total offences 
     (of selected selected offence level 1, in two selected postcodes, from a SA crime statistics data)
-
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
