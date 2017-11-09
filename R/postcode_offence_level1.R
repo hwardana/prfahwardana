@@ -57,6 +57,9 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   plot_data <- dcast(plot_data, month ~ postcode, fun = sum,
                      fill = 0, value.var = "total_offence_count")
 
+  ggplot(plot_data, aes(x,y, group = month(date))) + geom_count()
+    + labs(x = postcodes[1], y = postcodes[2])
+
   # Plotting and combining two postcodes
   plot_data_x <- rbind(plot_data$month, plot_data$x, postcodes[1])
   plot_data_y <- rbind(plot_data$month, plot_data$y, postcodes[2])
@@ -67,6 +70,6 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   plot_data_xy$Month <- factor(plot_data_xy$Month, level = c("7","8","9","10","11","12","1","2","3","4","5","6"))
 
   # Generate the plot
-  ggplot(plot_data_xy, aes(x = Month, y = Total_Offences, color = Postcode)) + geom_point(size = 4)
+  ggplot(plot_data_xy, aes(x = Month, y = Total_Offences, color = Postcode)) + geom_point()
 
 }
