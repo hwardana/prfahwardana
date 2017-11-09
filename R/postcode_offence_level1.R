@@ -1,5 +1,20 @@
+## QUESTION ----
 
-# ... ----
+#' postcode_offencelvl1
+#'
+#' \code{<postcode_offencelvl1>} <... does what? A short description.>
+#' @param crime_data A data.table object with the following columns:
+#'     "date" (POSIXct), "suburb" (chr), "postcode" (chr), "offence_level_1" (chr),
+#'     "offence_level_2" (chr), "offence_level_3" (chr), "offence_count" (num).
+#' @param offence_description A character string of <What are your expected inputs?>.
+#' @param postcodes A two-element character vector. Each element is an SA postcode.
+#' @export
+#' @return  A ggplot object showing the correlation in offence count between the two input postcodes.
+#' @examples
+#' <one or two examples showing how to use the function>
+#'
+#'
+
 postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   require(data.table)
   require(ggplot2)
@@ -38,9 +53,12 @@ postcode_offencelvl1 <- function(crime_data, offence_description, postcodes) {
   plot_data <- dcast(plot_data, month ~ postcode, fun = sum,
                      fill = 0, value.var = "total_offence_count")
 
+  # Plotting and combining two postcodes
   plot_data_x <- rbind(plot_data$month, plot_data$x, postcodes[1])
   plot_data_y <- rbind(plot_data$month, plot_data$y, postcodes[2])
   plot_data_xy <- data.frame(t(cbind(plot_data_x,plot_data_y)))
+
+  # Set column names for the combined plot_data_xy
   setnames(plot_data_xy, c("Month", "Total_Offences", "Postcode"))
   plot_data_xy$Month <- factor(plot_data_xy$Month, level = c("7","8","9","10","11","12","1","2","3","4","5","6"))
 
